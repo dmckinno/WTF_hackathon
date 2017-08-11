@@ -40,22 +40,22 @@ print data[-100:,:]
 
 ####################################################
 # This will be our pole filtering function
-length = N.shape(data)[0]
+#length = N.shape(data)[0]
 
-n=0
+#n=0
 
-for n in range(0,length):
-	if abs(data[n,1]) > 70:
-	    np.delete(data, n, 0)
-	    n = n+1
+#for n in range(0,length):
+#	if abs(data[n,1]) > 70:
+#	    np.delete(data, n, 0)
+#	    n = n+1
 	
-print data[-100:,:]
+#print data[-100:,:]
 
-new_length = N.shape(data)[0]
+#new_length = N.shape(data)[0]
 
-print length
+#print length
 
-print new_length
+#print new_length
 
 # This is the end of our pole filtering function
 ####################################################
