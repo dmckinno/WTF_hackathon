@@ -6,6 +6,7 @@ from numpy import genfromtxt
 import random
 import requests
 import json
+from pprint import pprint
 
 
 
@@ -35,7 +36,11 @@ def sort_by_intensity(data):
 
     print data[-100:,:]
 
-    numpy.savetxt("sorted_data.csv", data, delimiter=",")
+    number_of_entries = raw_input("How many entries do you want to return?")
+
+    data_culled = data[-int(number_of_entries):,:]
+
+    numpy.savetxt("sorted_data.csv", data_culled, delimiter=",")
 
     return data
 
@@ -57,5 +62,9 @@ def call_places_api(data):
 
 call_places_api(sort_by_intensity(import_image()))
 
+#with open('test.json') as data_file:    
+ #   data = json.load(data_file)
 
+#pprint(data)
 
+#data["name"]
