@@ -52,7 +52,7 @@ def sort_by_intensity(data):
             #print location.json()
             print(response["results"][0]["vicinity"])
             #print n
-            place.append(response["results"][0]["vicinity"])
+            place.append(response["results"][0]["vicinity"].encode('ascii', 'ignore').decode('ascii'))
         else:
             print("There is no information available about this place.")
             #print n
@@ -67,6 +67,7 @@ def sort_by_intensity(data):
     header = ["title","lat","lon","intensity"]
     mapbox_array_header = numpy.vstack([header, mapbox_array])
     print mapbox_array_header
+    #yourstring.encode('ascii', 'ignore').decode('ascii')
     numpy.savetxt("mapbox.csv", mapbox_array_header, delimiter=",", fmt="%s")
     
     
