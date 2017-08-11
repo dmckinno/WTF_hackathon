@@ -1,61 +1,61 @@
 import os
+import numpy
 import numpy as np
 import numpy as N
 from numpy import genfromtxt
 import random
-
-####################################################
-# This will be refactored into our image function
-
-image_variable = str(random.randint(1, 10000))
-
-image_name = raw_input("Which scene would you like to analyze? Note that it must be in this root directory.")
-
-# Clip the image to remove poles and oceans
-os.system("gdalwarp -q -cutline /Users/daniel/Documents/Hackathon/Clipper.shp -crop_to_cutline -dstalpha -tr 0.1 0.1 -of GTiff /Users/daniel/Documents/Hackathon/"+image_name+" /Users/daniel/Documents/Hackathon/"+image_variable+".tif")
-
-# Turn the tiff into a text file
-os.system("gdal_translate -of XYZ /Users/daniel/Documents/Hackathon/"+image_variable+".tif /Users/daniel/Documents/Hackathon/"+image_variable+".xyz")
-
-# This is the end of our image function
-####################################################
+import requests
+import json
 
 
 
-####################################################
-# This will be refactored into our sorting function
+def import_image():
 
-data = genfromtxt(image_variable+".xyz", delimiter=' ')
+    image_variable = str(random.randint(1, 10000))
 
-data = np.array(data)
+    image_name = raw_input("Which scene would you like to analyze? Note that it must be in this root directory.")
 
-data = data[data[:,2].argsort()]
+    # Clip the image to remove poles and oceans
+    os.system("gdalwarp -q -cutline /Users/daniel/Documents/Hackathon/Clipper.shp -crop_to_cutline -dstalpha -tr 0.1 0.1 -of GTiff /Users/daniel/Documents/Hackathon/"+image_name+" /Users/daniel/Documents/Hackathon/"+image_variable+".tif")
 
-#print data
+    # Turn the tiff into a text file
+    os.system("gdal_translate -of XYZ /Users/daniel/Documents/Hackathon/"+image_variable+".tif /Users/daniel/Documents/Hackathon/"+image_variable+".xyz")
+    
+    data = genfromtxt(image_variable+".xyz", delimiter=' ')
 
-print data[-100:,:]
+    return data
 
-# This is the end of our sorting function
-####################################################
+def sort_by_intensity(data):
 
-####################################################
-# This will be our pole filtering function
-#length = N.shape(data)[0]
+    data = np.array(data)
 
-#n=0
+    data = data[data[:,2].argsort()]
 
-#for n in range(0,length):
-#	if abs(data[n,1]) > 70:
-#	    np.delete(data, n, 0)
-#	    n = n+1
-	
-#print data[-100:,:]
+    #print data
 
-#new_length = N.shape(data)[0]
+    print data[-100:,:]
 
-#print length
+    numpy.savetxt("sorted_data.csv", data, delimiter=",")
 
-#print new_length
+    return data
 
-# This is the end of our pole filtering function
-####################################################
+def call_places_api(data):
+    length = N.shape(data)[0]
+
+    print length
+
+    print data[-1,1]
+
+    print data[-1,0]
+
+    location = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(data[-15,1])+","+str(data[-15,0])+"&radius=10&key=AIzaSyBhDN2AqOqz_pccRm3YaRnAw1Ik4Ur-O6g")
+
+    print location
+
+    print location.json()
+
+
+call_places_api(sort_by_intensity(import_image()))
+
+
+
