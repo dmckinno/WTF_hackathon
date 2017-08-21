@@ -8,7 +8,7 @@ import requests
 import json
 import time
 
-
+# This function imports an image from within the directory that the script is run.
 def import_image():
 
     image_variable = str(random.randint(1, 10000))
@@ -25,22 +25,23 @@ def import_image():
 
     return data
 
+# This function turns the image into a array and sorts by intensity.
+
 def sort_by_intensity(data):
 
     data = np.array(data)
 
     data = data[data[:,2].argsort()]
 
-    #print data
-
-    #print data[-100:,:]
+    # This function writes the n most intense rows to a csv
 
     number_of_entries = raw_input("How many entries do you want to return?")
 
     data = data[-int(number_of_entries):,:]
 
     numpy.savetxt("sorted_data.csv", data, delimiter=",")
-    
+ 
+# This function loops over the array, calls the Google Places API, and appends the name as another column.
     n=-1
     place=[]
 

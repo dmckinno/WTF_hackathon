@@ -16,7 +16,8 @@ name_column = data[:,0]
 name_column = name_column.tolist()
 
 wtf_index = []
-#print len(name_column)
+
+# This function calls the Google Custom Search API of Google News to determine how many times a particular place was mentioned in the news.
 
 for n in name_column:
     print n

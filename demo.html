@@ -75,6 +75,9 @@ var map = new mapboxgl.Map({
     zoom: 0,
     center: [0, 0]
 });
+
+//These map.on functions load individual layers. The options should be self-explanatory.
+
 map.on('load', function () {
     map.addSource('8-bit-4b5j57', {
         type: 'raster',
@@ -189,6 +192,8 @@ map.on('load', function () {
         
     });
 });
+
+//This block creates the buttons that enable the user to turn layers on and off
 
 var toggleableLayerIds = ['DG Most Imaged', 'WTF Index', 'Mines', 'Most Imaged', 'Mask'];
 for (var i = 0; i < toggleableLayerIds.length; i++) {
