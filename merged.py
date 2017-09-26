@@ -46,7 +46,7 @@ def sort_by_intensity(data):
     place=[]
 
     while n >= -int(number_of_entries):
-        location = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(data[n,1])+","+str(data[n,0])+"&radius=5000&key=AIzaSyBhDN2AqOqz_pccRm3YaRnAw1Ik4Ur-O6g")
+        location = requests.get("https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+str(data[n,1])+","+str(data[n,0])+"&radius=5000&key=API_KEY_HERE")
         #print location.json()
         response = json.loads(location.text)
         if response["status"] != "ZERO_RESULTS":
